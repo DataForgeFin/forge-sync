@@ -2,6 +2,7 @@
 import os
 import requests
 from datetime import datetime
+from typing import Dict, Any
 
 from dagster import asset
 
