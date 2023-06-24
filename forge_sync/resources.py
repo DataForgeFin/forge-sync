@@ -2,19 +2,22 @@ import os
 from typing import Dict
 
 import pymongo
-from dagster import ConfigurableResource, Definitions
+from dagster import ConfigurableIOManager
 
 
-mongo_client = pymongo.MongoClient(os.getenv("MONGO_URI"))
-
-
-class MongoDBResource(ConfigurableResource):
+class MongoIO(ConfigurableIOManager):
+    connection_string: str
     database: str
     collection: str
 
-    def write(self, json_data: Dict[str, str]):
-        """Writes dict to the database collection"""
-        connected_database = getattr(mongo_client, self.database)
-        connected_collection = getattr(connected_database, self.collection)
+    def handle_output(self, context, obj):
+        context.log.info(f"Saving results")
+        client = pymongo.MongoClient()
+        db = client[self.database]
+        collection = db[self.collection]
+        collection.insert_one(obj)
+        client.close()
 
-        connected_collection.insert_one(json_data)
+    def load_input(self, context):
+        context.log.error(f"Not implemented load from MongoDB")
+        raise NotImplementedError()
