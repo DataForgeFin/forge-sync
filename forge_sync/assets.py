@@ -7,7 +7,7 @@ from typing import Dict, Any
 from dagster import asset
 
 
-@asset
+@asset(description="Data from HG API that has SELIC")
 def selic(context) -> Dict[str, Any]:
     response = requests.get(f"https://api.hgbrasil.com/finance/taxes?key={os.environ['API_KEY']}")
     context.log.info(f"Found {response.json()}")
