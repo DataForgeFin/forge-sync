@@ -12,7 +12,7 @@ class MongoIO(ConfigurableIOManager):
 
     def handle_output(self, context, obj):
         context.log.info(f"Saving results")
-        client = pymongo.MongoClient()
+        client = pymongo.MongoClient(self.connection_string)
         db = client[self.database]
         collection = db[self.collection]
         collection.insert_one(obj)
