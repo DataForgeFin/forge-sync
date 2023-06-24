@@ -10,7 +10,6 @@ defs = Definitions(
     assets=all_assets,
     resources={
         "io_manager": MongoIO(
-            connection_string=os.getenv("MONGO_URI", "mongodb://localhost:27017/"),
             database="forge_sync",
             collection="finance_metrics_low"
         ),
