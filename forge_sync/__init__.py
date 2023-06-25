@@ -11,7 +11,7 @@ defs = Definitions(
     resources={
         "io_manager": MongoIO(
             database="forge_sync",
-            collection="finance_metrics_low"
+            collection="finance_metrics_daily"
         ),
     },
 )
