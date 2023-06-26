@@ -10,9 +10,11 @@ from dagster import asset
 def parse_hg_taxes(response, metric):
     parsed_data = {
         "date": datetime.strptime(response["date"], "%Y-%m-%d"),
-        "metric": metric,
         "value": response[metric],
-        "metadata": {"execution_at": datetime.now()},
+        "metadata": {
+            "metric": metric,
+            "execution_at": datetime.now()
+        },
     }
     return parsed_data
 
