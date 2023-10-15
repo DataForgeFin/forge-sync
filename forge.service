@@ -1,0 +1,14 @@
+[Unit]
+Description=Dagster Server
+After=multi-user.target
+Conflicts=getty@tty1.service
+
+[Service]
+WorkingDirectory=/home/ubuntu/projects/forge-sync
+User=ubuntu
+
+ExecStart=/home/ubuntu/projects/forge-sync/.venv/bin/python -m dagster dev
+StandardInput=tty-force
+
+[Install]
+WantedBy=multi-user.target
